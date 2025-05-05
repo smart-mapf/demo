@@ -1,0 +1,5 @@
+{
+    "editor.formatOnSave": true,
+    "cmake.sourceDirectory": "/home/spaaaacccee/projects/smart-sim/smart/client/loop_functions",
+    "editor.inlayHints.enabled": "offUnlessPressed"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "smart-service",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun index.ts"
+  },
+  "dependencies": {
+    "@trpc/server": "^11.1.2",
+    "@types/ws": "^8.18.1",
+    "smart": "workspace:*",
+    "ws": "^8.18.2",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

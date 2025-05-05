@@ -1,0 +1,19 @@
+{
+  "name": "smart-sim",
+  "module": "index.ts",
+  "type": "module",
+  "workspaces": [
+    "smart",
+    "smart-service",
+    "smart-visualiser"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "leva-file-picker": "^1.2.3"
+  }
+}
