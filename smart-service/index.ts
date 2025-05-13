@@ -1,6 +1,6 @@
 import { initTRPC } from "@trpc/server";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import { run } from "smart";
+import { run, type Output } from "smart";
 import { WebSocketServer } from "ws";
 import { z } from "zod";
 
@@ -19,14 +19,19 @@ export const appRouter = t.router({
     .subscription(async function* (opts) {
       const { input } = opts;
       const { values, dispose } = await run(input);
-      yield* values();
-      await dispose();
+      try {
+        yield* values();
+      } catch (e) {
+        yield { type: "error", error: e } as Output;
+      } finally {
+        await dispose();
+      }
     }),
 });
 
 export type AppRouter = typeof appRouter;
 
-const wss = new WebSocketServer({ port: 8194 });
+const wss = new WebSocketServer({ port: 8194, perMessageDeflate: true });
 
 const handler = applyWSSHandler({
   wss,
@@ -37,8 +42,12 @@ const handler = applyWSSHandler({
     // server ping message interval in milliseconds
     pingMs: 30000,
     // connection is terminated if pong message is not received in this many milliseconds
-    pongWaitMs: 5000,
+    pongWaitMs: 1000 * 60 * 60,
   },
+});
+
+wss.on("error", (e) => {
+  console.error(e);
 });
 
 process.on("SIGTERM", () => {
