@@ -1,0 +1,6 @@
+[submodule "smart"]
+	path = smart
+	url = https://github.com/JingtianYan/SMART/tree/external-visualisation
+[submodule "smart-visualiser"]
+	path = smart-visualiser
+	url = https://github.com/spaaaacccee/smart-visualiser
