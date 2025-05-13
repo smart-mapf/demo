@@ -2,6 +2,9 @@
   "name": "smart-sim",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bunx concurrently \"cd smart-visualiser && bun run dev\" \"cd smart-service && bun run dev\" --kill-others --kill-others-bail"
+  },
   "workspaces": [
     "smart",
     "smart-service",
