@@ -1,15 +1,27 @@
-# smart-sim
+# Visualiser stack for SMART
 
-To install dependencies:
+## Install
 
-```bash
-bun install
-```
+The following instructions are for Linux only.
 
-To run:
+1. Follow the instructions in `./smart` to set up the simulator.
 
-```bash
-bun run index.ts
-```
+2. Install bun with:
 
-This project was created using `bun init` in bun v1.2.8. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+3. In the root directory, run:
+
+   ```bash
+   bun install
+   ```
+
+4. To start the stack, run:
+
+   ```bash
+   bun run dev
+   ```
+
+5. Open the provided URL in your browser.
