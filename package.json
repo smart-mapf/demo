@@ -15,8 +15,5 @@
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "leva-file-picker": "^1.2.3"
   }
 }
