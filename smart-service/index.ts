@@ -22,7 +22,7 @@ export const appRouter = t.router({
       try {
         yield* values();
       } catch (e) {
-        yield { type: "error", error: e } as Output;
+        yield [{ type: "error", error: e }] as Output[];
       } finally {
         await dispose();
       }
