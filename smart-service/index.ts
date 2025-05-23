@@ -16,13 +16,14 @@ export const appRouter = t.router({
         paths: z.string().nonempty("Paths file must not be empty"),
       })
     )
-    .subscription(async function* (opts) {
+    .subscription(async function* (opts): AsyncGenerator<Output[]> {
       const { input } = opts;
-      const { values, dispose } = await run(input);
+      const { values, dispose, errors } = await run(input);
       try {
         yield* values();
+        yield [{ type: "message", content: await errors() }];
       } catch (e) {
-        yield [{ type: "error", error: e }] as Output[];
+        yield [{ type: "error", error: e }];
       } finally {
         await dispose();
       }
