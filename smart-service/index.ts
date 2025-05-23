@@ -21,7 +21,7 @@ export const appRouter = t.router({
       const { values, dispose, errors } = await run(input);
       try {
         yield* values();
-        yield [{ type: "message", content: await errors() }];
+        yield [{ type: "message", content: await errors }];
       } catch (e) {
         yield [{ type: "error", error: e }];
       } finally {
