@@ -1,7 +1,6 @@
 import { initTRPC, tracked, type TrackedEnvelope } from "@trpc/server";
-import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import { run, type Output } from "smart";
-import { WebSocketServer } from "ws";
+import { createBunWSHandler } from 'trpc-bun-adapter';
 import { z } from "zod";
 
 const tracker = <T extends object>() => {
@@ -21,6 +20,7 @@ const tracker = <T extends object>() => {
 const t = initTRPC.create();
 
 export const appRouter = t.router({
+
   run: t.procedure
     .input(
       z.object({
@@ -53,26 +53,19 @@ export const appRouter = t.router({
 
 export type AppRouter = typeof appRouter;
 
-const wss = new WebSocketServer({ port: 8194, perMessageDeflate: true });
+const ws = createBunWSHandler({ router: appRouter })
 
-const handler = applyWSSHandler({
-  wss,
-  router: appRouter,
-  // Enable heartbeat messages to keep connection open (disabled by default)
-  keepAlive: {
-    enabled: true,
-    // server ping message interval in milliseconds
-    pingMs: 30000,
-    // connection is terminated if pong message is not received in this many milliseconds
-    pongWaitMs: 1000 * 60 * 60,
+Bun.serve({
+  port: 8194,
+  fetch(request, server) {
+    if (server.upgrade(request, { data: { req: request } })) {
+      return;
+    }
+    return new Response("Please use websocket protocol", { status: 404 });
   },
-});
-
-wss.on("error", (e) => {
-  console.error(e);
-});
-
-process.on("SIGTERM", () => {
-  handler.broadcastReconnectNotification();
-  wss.close();
+  websocket: {
+    ...ws,
+    perMessageDeflate: true,
+    backpressureLimit: 16 * 1024 * 1024 * 1024
+  }
 });
