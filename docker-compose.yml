@@ -1,0 +1,68 @@
+services:
+  # Define each service that you want to have HTTPS
+  # Only need a port 80
+  # For example
+  mapf-tracker-api:
+    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    image: ghcr.io/shortestpathlab/smart-sim:latest
+    container_name: smart-sim
+    environment:
+      # This service will be accessible via this virtual host
+      - VIRTUAL_HOST=smart-sim.pathfinding.ai
+      - LETSENCRYPT_HOST=smart-sim.pathfinding.ai
+    env_file:
+      - server/.env.production
+    volumes:
+      - ./data/cache:/tmp/cache
+    expose:
+      - 80
+    networks:
+      - proxy
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  nginx-proxy:
+    image: bbtsoftwareag/nginx-proxy-unrestricted-requestsize:alpine
+    container_name: nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./data/certs:/etc/nginx/certs:ro
+      - ./data/vhost:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+    environment:
+      - DEFAULT_HOST=smart-sim.pathfinding.ai
+    networks:
+      - proxy
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: letsencrypt
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - ./data/acme.sh:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/certs:/etc/nginx/certs
+      - ./data/vhost:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+    environment:
+      - DEFAULT_EMAIL=shortestpathlab@monash.edu
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    networks:
+      - proxy
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/kevin/.docker/config.json:/config.json
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_LABEL_ENABLE=true # Only watch containers with specific labels
+    command: --interval 300 # Check for updates every 300 seconds (5 minutes)
+networks:
+  proxy:
+    driver: bridge

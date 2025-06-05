@@ -59,7 +59,7 @@ export type AppRouter = typeof appRouter;
 const ws = createBunWSHandler({ router: appRouter });
 
 Bun.serve({
-  port: 8194,
+  port: 80,
   fetch(request, server) {
     if (server.upgrade(request, { data: { req: request } })) {
       return;

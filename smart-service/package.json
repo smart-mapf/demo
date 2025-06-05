@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun index.ts"
+    "dev": "bun index.ts",
+    "start": "bun index.ts"
   },
   "dependencies": {
     "@trpc/server": "^11.1.2",
