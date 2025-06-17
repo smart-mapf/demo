@@ -2,7 +2,7 @@
 FROM oven/bun:debian
 
 # Install make and build essentials
-RUN apt-get update && apt-get install -y python3 python-is-python3 build-essential qtbase5-dev git cmake libfmt-dev libboost-all-dev
+RUN apt-get update && apt-get install -y python3 python-is-python3 build-essential qtbase5-dev git cmake libfmt-dev libboost-all-dev freeglut3
 
 # Install ARGoS
 
