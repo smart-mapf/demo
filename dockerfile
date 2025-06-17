@@ -2,7 +2,15 @@
 FROM oven/bun:debian
 
 # Install make and build essentials
-RUN apt-get update && apt-get install -y build-essential qtbase5-dev
+RUN apt-get update && apt-get install -y build-essential qtbase5-dev git cmake libfmt-dev
+
+# Install ARGoS
+
+COPY deb/ deb/
+
+RUN apt-get install -y sudo
+
+RUN apt-get install -y ./deb/argos3_simulator-3.0.0-x86_64-beta59.deb
 
 # Verify make is installed
 RUN make --version
@@ -14,7 +22,8 @@ WORKDIR /app
 COPY package.json bun.lock ./
 
 COPY smart/package.json smart/bun.lock ./smart/
-COPY smart-service/package.json smart-service/bun.lock ./smart/
+COPY smart-service/package.json smart-service/bun.lock ./smart-service/
+COPY smart-visualiser/package.json smart-visualiser/bun.lock ./smart-visualiser/
 
 # Install dependencies
 RUN bun install
