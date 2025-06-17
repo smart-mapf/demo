@@ -30,7 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: snickerbockers/submodules-init@v4
+      - name: Setup submodule
+        run: git submodule update --init
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
