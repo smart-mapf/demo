@@ -4,6 +4,8 @@ FROM oven/bun:debian
 # Install make and build essentials
 RUN apt-get update && apt-get install -y python3 python-is-python3 build-essential qtbase5-dev git cmake libfmt-dev libboost-all-dev freeglut3-dev
 
+RUN ln -s /usr/lib/x86_64-linux-gnu/libglut.so /usr/lib/x86_64-linux-gnu/libglut.so.3
+
 # Set the working directory inside the container
 WORKDIR /app
 
