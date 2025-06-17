@@ -2,7 +2,7 @@
 FROM oven/bun:debian
 
 # Install make and build essentials
-RUN apt-get update && apt-get install -y build-essential qtbase5-dev git cmake libfmt-dev
+RUN apt-get update && apt-get install -y python3 build-essential qtbase5-dev git cmake libfmt-dev
 
 # Install ARGoS
 
