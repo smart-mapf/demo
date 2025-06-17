@@ -4,6 +4,9 @@ FROM oven/bun:debian
 # Install make and build essentials
 RUN apt-get update && apt-get install -y python3 python-is-python3 build-essential qtbase5-dev git cmake libfmt-dev libboost-all-dev freeglut3
 
+# Set the working directory inside the container
+WORKDIR /app
+
 # Install ARGoS
 
 COPY deb/ deb/
@@ -14,9 +17,6 @@ RUN apt-get install -y ./deb/argos3_simulator-3.0.0-x86_64-beta59.deb
 
 # Verify make is installed
 RUN make --version
-
-# Set the working directory inside the container
-WORKDIR /app
 
 # Copy package.json
 COPY package.json bun.lock ./
