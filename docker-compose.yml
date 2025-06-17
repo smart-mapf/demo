@@ -6,7 +6,7 @@ services:
     restart: always
     labels:
       - com.centurylinklabs.watchtower.enable=true
-    image: smart-sim:latest
+    image: ghcr.io/smart-mapf/service:latest
     container_name: smart-sim
     environment:
       # This service will be accessible via this virtual host
@@ -54,7 +54,6 @@ services:
     container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/benchmarks/.docker/config.json:/config.json
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true # Only watch containers with specific labels
