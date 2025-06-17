@@ -41,12 +41,14 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Build
-        run: bun run build -- --base="${{ steps.pages.outputs.base_path }}"
+        run: |
+          cd smart-visualiser
+          bun run build -- --base="${{ steps.pages.outputs.base_path }}"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
-          path: "./dist"
+          path: "./smart-visualiser/dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
