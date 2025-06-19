@@ -9,6 +9,8 @@
 
 This is the source code for the online app that we host (link above).
 
+You can find the source code for the SMART simulator itself [here](https://github.com/smart-mapf/smart), or the visualiser [here](https://github.com/smart-mapf/visualiser). 
+
 ## Install
 
 The following instructions are for Linux only.
