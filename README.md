@@ -1,4 +1,13 @@
-# Visualiser stack for SMART
+
+![Banner](https://github.com/user-attachments/assets/92ca8b00-1580-4255-81e0-fa7a3d1e6fd8)
+
+[Open the app](https://smart-mapf.github.io/demo/)
+
+---
+
+# SMART Demo
+
+This is the source code for the online app that we host (link above).
 
 ## Install
 
