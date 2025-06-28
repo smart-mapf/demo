@@ -27,6 +27,8 @@ export const appRouter = t.router({
         scen: z.string().nonempty("Scen file must not be empty"),
         map: z.string().nonempty("Map file must not be empty"),
         paths: z.string().nonempty("Paths file must not be empty"),
+        acceleration: z.number().default(10),
+        maxSpeed: z.number().default(500),
         lastEventId: z.string().nullish(),
       })
     )
