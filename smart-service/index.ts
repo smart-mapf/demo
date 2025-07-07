@@ -28,6 +28,8 @@ export const appRouter = t.router({
         map: z.string().nonempty("Map file must not be empty"),
         paths: z.string().nonempty("Paths file must not be empty"),
         acceleration: z.number().default(10),
+        angularMaxSpeed: z.number().default(7.5),
+        angularAcceleration: z.number().default(3),
         maxSpeed: z.number().default(500),
         lastEventId: z.string().nullish(),
       })
